@@ -8,6 +8,7 @@ public class StringController : MonoBehaviour
     EdgeCollider2D edgeCollider;
     [SerializeField] Transform player;
     [SerializeField] Transform altPlayer;
+    [SerializeField] float thickness = 0.1f;
 
     Vector2 firstPos = Vector2.zero;
     Vector2 secondPos = Vector2.zero;
@@ -19,7 +20,17 @@ public class StringController : MonoBehaviour
         edgeCollider = GetComponent<EdgeCollider2D>();
 
         if(lineRenderer != null)
+        {
             lineRenderer.positionCount = 2;
+            lineRenderer.endWidth = thickness;
+            lineRenderer.startWidth = thickness;
+        }
+
+        if(edgeCollider != null)
+        {
+            edgeCollider.edgeRadius = thickness/2;
+        }
+            
 
     }
 
