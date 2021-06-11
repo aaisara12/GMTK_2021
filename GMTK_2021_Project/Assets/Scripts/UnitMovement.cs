@@ -11,17 +11,22 @@ public class UnitMovement : MonoBehaviour
     Vector2 targetVelocity = Vector2.zero;
     Vector2 currentVel;
 
-    // Start is called before the first frame update
-    void Start()
+
+    IUnitInput input;
+
+    void Awake()
     {
-        
+        input = GetComponent<IUnitInput>();
+        if(input == null)
+            Debug.LogError("This unit needs an input component!");
     }
 
     // Update is called once per frame
     void Update()
     {
-        targetVelocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;  // We normalize here because normalizing at current velocity would prevent it from ever reaching zero vector
+        if(input == null) {return;}
 
+        targetVelocity = input.inputVector.normalized;
         currentVelocity = Vector2.SmoothDamp(currentVelocity, targetVelocity, ref currentVel, smoothTime);
         transform.Translate((currentVelocity) * speed * Time.deltaTime);
     }
