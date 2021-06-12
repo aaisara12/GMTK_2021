@@ -13,4 +13,5 @@ public class Projectile : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().AddForce(transform.right * force);
     }
+
 }
