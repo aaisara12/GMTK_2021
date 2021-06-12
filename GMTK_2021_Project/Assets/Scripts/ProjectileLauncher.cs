@@ -43,6 +43,14 @@ public class ProjectileLauncher : MonoBehaviour
             newProj.transform.position = firePoint.position;
             newProj.transform.rotation = firePoint.rotation;
 
+            
+            // This is a messy way of setting the "no damage tag" for the projectile (messy bc this is supposed to be generic code)
+            Projectile projectile = newProj.GetComponent<Projectile>();
+            if(projectile != null)
+                projectile.noDamageTag = gameObject.tag;
+            
+
+
             // It's important that we enable the bullet AFTER setting the position and rotation so that the force is applied in
             // the proper direction on enable
 

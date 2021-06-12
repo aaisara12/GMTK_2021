@@ -11,6 +11,20 @@ public class Projectile : MonoBehaviour, IPooledGameObject
     float timeOfEnable = 0;
 
 
+
+    // We make this setter so that the launchers can set themselves as the ones that their projectiles should not damage 
+    private string _noDamageTag = "";      // We don't want the projectiles to deal damage to anything before we initialize it
+    public string noDamageTag
+    {
+        set
+        {
+            _noDamageTag = value;
+        }
+    }  
+
+
+
+
     // NOTE:  We use the below structure in order to catch mistakenly assigning a pool more than once to a given projectile
     private ProjectilePool _pool;       // Note that we need this private version of the pool instance in order to make the check whether a pool has been assigned to it
     public ProjectilePool pool
@@ -65,6 +79,8 @@ public class Projectile : MonoBehaviour, IPooledGameObject
         }
         else if(healthStat != null)
         {
+            if(other.CompareTag(_noDamageTag)) {return;}        // Don't do anything if the object is tagged with an ignore damage tag
+
             healthStat.TakeDamage(damage);
             Vanish();
             // TODO: Spawn an explosion prefab?
