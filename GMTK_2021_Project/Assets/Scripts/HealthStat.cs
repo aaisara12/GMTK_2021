@@ -20,6 +20,8 @@ public class HealthStat : MonoBehaviour
 
     public void TakeDamage(float dmg)
     {
+        if(currentHealth <= 0) {return;}    // We don't want to constantly be invoking the damaged/killed events even after the unit has died
+
         currentHealth -= dmg;
 
         OnUnitDamaged?.Invoke(new HealthInfo(maxHealth, currentHealth));

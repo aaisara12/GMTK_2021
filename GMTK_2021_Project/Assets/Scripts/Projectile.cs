@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour, IPooledGameObject
     [SerializeField] float force = 1;
     [SerializeField] float expireTime = 5;
     [SerializeField] int bulletValue = 1;     // How many player bullets this projectile corresponds to
+    [SerializeField] int damage = 5;
     float timeOfEnable = 0;
 
 
@@ -53,15 +54,22 @@ public class Projectile : MonoBehaviour, IPooledGameObject
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        // Is there a better way for checking what type of thing we collided with? I thought Smallberg said something about
+        // how attempting to a cast an object to a certain type and then checking to see if it returned a null value was costly
         BulletEater bulletEater = other.GetComponent<BulletEater>();
+        HealthStat healthStat = other.GetComponent<HealthStat>();
         if(bulletEater != null)
         {
             bulletEater.FeedBullets(bulletValue);
             Vanish();
         }
+        else if(healthStat != null)
+        {
+            healthStat.TakeDamage(damage);
+            Vanish();
+            // TODO: Spawn an explosion prefab?
+        }
 
-        // TODO: Do another case in an if-else that checks for if the bullet has instead touched a unit with a health component
-        // TODO: Remove access to public functions Vanish and GetBulletValue
     }
 
 

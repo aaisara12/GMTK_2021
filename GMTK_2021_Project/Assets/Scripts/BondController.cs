@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StringController : MonoBehaviour
+public class BondController : MonoBehaviour
 {
     LineRenderer lineRenderer;
     EdgeCollider2D edgeCollider;
+    HealthStat healthStat;
     [SerializeField] Transform player;
     [SerializeField] Transform altPlayer;
     [SerializeField] float thickness = 0.1f;
@@ -30,6 +31,12 @@ public class StringController : MonoBehaviour
         {
             edgeCollider.edgeRadius = thickness/2;
         }
+
+
+        // Set up the edge collider to be disabled when it dies
+        healthStat = GetComponent<HealthStat>();
+        if(healthStat != null)
+            healthStat.OnUnitKilled += HandleDeath;
             
 
     }
@@ -52,5 +59,14 @@ public class StringController : MonoBehaviour
             Vector2[] newPoints = {firstPos, secondPos};
             edgeCollider.points = newPoints;
         }
+    }
+
+
+    void HandleDeath()
+    {
+        edgeCollider.enabled = false;
+
+        // Do some other stuff (like play proper animation or change color, etc.)
+        healthStat.OnUnitKilled -= HandleDeath;
     }
 }
