@@ -15,7 +15,6 @@ public class BulletEater : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("TRIGGERED");
         Projectile p = other.GetComponent<Projectile>();
         if(p != null)
         {
