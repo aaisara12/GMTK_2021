@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour, IPooledGameObject
 {
     [SerializeField] float force = 1;
     [SerializeField] float expireTime = 5;
+    [SerializeField] int bulletValue = 1;     // How many player bullets this projectile corresponds to
     float timeOfEnable = 0;
 
 
@@ -31,7 +32,6 @@ public class Projectile : MonoBehaviour, IPooledGameObject
         GetComponent<Rigidbody2D>().AddForce(transform.right * force);
         timeOfEnable = Time.time;
 
-        Debug.Log("ENABLING PROJ");
     }
 
 
@@ -39,10 +39,18 @@ public class Projectile : MonoBehaviour, IPooledGameObject
     {
         if(Time.time - timeOfEnable > expireTime)
         {
-            pool.ReturnToPool(gameObject);
-            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            Vanish();
         }
     }
+
+
+    public void Vanish()
+    {
+        pool.ReturnToPool(gameObject);
+        gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    }
+
+    public int GetBulletValue() => bulletValue;
 
 
 

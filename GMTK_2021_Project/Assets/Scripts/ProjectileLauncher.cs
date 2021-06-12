@@ -39,8 +39,4 @@ public class ProjectileLauncher : MonoBehaviour
     }
 
 
-    // TODO:
-    // 1. Create a static object pool somewhere that stores Projectiles
-    // 2. Create a Get() and Return() method for the object pool
-    // 3. Once the projectiles have expired, have them return themselves to the object pool
 }
