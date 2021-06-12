@@ -13,18 +13,13 @@ public class BulletEater : MonoBehaviour
             Debug.LogWarning("There is no AmmoStat component associated with this Eater!");
         }
     }
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        Projectile p = other.GetComponent<Projectile>();
-        if(p != null)
-        {
-            // If a projectile contacts the trigger field, then add the proper number of bullets to the player's
-            // bullet stock and then make the projectile disappear
+    
 
-            if(ammoSource != null)
-                ammoSource.AddBullets(p.GetBulletValue());
-            p.Vanish();
-        }
-            
+    // The reason we don't have the bullets contacting the ammo source directly is because the bullets
+    // don't really know where the ammo source is in relation to the eater it hits
+    public void FeedBullets(int numBullets)
+    {
+        if(ammoSource != null)
+            ammoSource.AddBullets(numBullets);
     }
 }

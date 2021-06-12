@@ -44,15 +44,25 @@ public class Projectile : MonoBehaviour, IPooledGameObject
     }
 
 
-    public void Vanish()
+    void Vanish()
     {
         pool.ReturnToPool(gameObject);
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
-    public int GetBulletValue() => bulletValue;
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        BulletEater bulletEater = other.GetComponent<BulletEater>();
+        if(bulletEater != null)
+        {
+            bulletEater.FeedBullets(bulletValue);
+            Vanish();
+        }
 
+        // TODO: Do another case in an if-else that checks for if the bullet has instead touched a unit with a health component
+        // TODO: Remove access to public functions Vanish and GetBulletValue
+    }
 
 
 }
