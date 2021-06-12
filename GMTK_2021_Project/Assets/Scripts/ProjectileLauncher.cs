@@ -9,6 +9,7 @@ public class ProjectileLauncher : MonoBehaviour
 
 
     [SerializeField] ProjectilePool pool;
+    [SerializeField] AmmoStat optionalAmmoSource;       // This is optional so that we can have a unit have infinite ammo
 
     float lastShot = 0;
 
@@ -27,20 +28,40 @@ public class ProjectileLauncher : MonoBehaviour
 
         if(Time.time - lastShot > 1/shotsPerSecond)
         {
+            lastShot = Time.time;       // We want to update the last shot time regardless of whether any bullets are actually shot to prevent constant checking of this loop in the case nothing is shot
+
+            if(optionalAmmoSource != null)                  // If we do have an ammo source, then expend bullets
+            {
+                if(!optionalAmmoSource.TryUseBullets(1))    // If we are all out of bullets to use, then don't shoot any more
+                    return;
+            }
+
             var newProj = pool.Get();       // This is where we try to get another projectile from the queue (note that the projectiles will automatically enqueue themselves back in after expiring)
 
-            newProj.SetActive(true);        // We NEED this line because the projectiles are disabled when we grab them from the queue
+            
 
             newProj.transform.position = firePoint.position;
             newProj.transform.rotation = firePoint.rotation;
+
+            
+            // This is a messy way of setting the "no damage tag" for the projectile (messy bc this is supposed to be generic code)
+            Projectile projectile = newProj.GetComponent<Projectile>();
+            if(projectile != null)
+                projectile.noDamageTag = gameObject.tag;
+            
+
+
+            // It's important that we enable the bullet AFTER setting the position and rotation so that the force is applied in
+            // the proper direction on enable
+
+            newProj.SetActive(true);        // We NEED this line because the projectiles are disabled when we grab them from the queue
     
-            lastShot = Time.time;
+            
+
+
+            
         }
     }
 
 
-    // TODO:
-    // 1. Create a static object pool somewhere that stores Projectiles
-    // 2. Create a Get() and Return() method for the object pool
-    // 3. Once the projectiles have expired, have them return themselves to the object pool
 }

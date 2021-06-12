@@ -6,7 +6,23 @@ public class Projectile : MonoBehaviour, IPooledGameObject
 {
     [SerializeField] float force = 1;
     [SerializeField] float expireTime = 5;
+    [SerializeField] int bulletValue = 1;     // How many player bullets this projectile corresponds to
+    [SerializeField] int damage = 5;
     float timeOfEnable = 0;
+
+
+
+    // We make this setter so that the launchers can set themselves as the ones that their projectiles should not damage 
+    private string _noDamageTag = "";      // We don't want the projectiles to deal damage to anything before we initialize it
+    public string noDamageTag
+    {
+        set
+        {
+            _noDamageTag = value;
+        }
+    }  
+
+
 
 
     // NOTE:  We use the below structure in order to catch mistakenly assigning a pool more than once to a given projectile
@@ -31,7 +47,6 @@ public class Projectile : MonoBehaviour, IPooledGameObject
         GetComponent<Rigidbody2D>().AddForce(transform.right * force);
         timeOfEnable = Time.time;
 
-        Debug.Log("ENABLING PROJ");
     }
 
 
@@ -39,12 +54,39 @@ public class Projectile : MonoBehaviour, IPooledGameObject
     {
         if(Time.time - timeOfEnable > expireTime)
         {
-            pool.ReturnToPool(gameObject);
-            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            Vanish();
         }
     }
 
 
+    void Vanish()
+    {
+        pool.ReturnToPool(gameObject);
+        gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    }
+
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // Is there a better way for checking what type of thing we collided with? I thought Smallberg said something about
+        // how attempting to a cast an object to a certain type and then checking to see if it returned a null value was costly
+        BulletEater bulletEater = other.GetComponent<BulletEater>();
+        HealthStat healthStat = other.GetComponent<HealthStat>();
+        if(bulletEater != null)
+        {
+            bulletEater.FeedBullets(bulletValue);
+            Vanish();
+        }
+        else if(healthStat != null)
+        {
+            if(other.CompareTag(_noDamageTag)) {return;}        // Don't do anything if the object is tagged with an ignore damage tag
+
+            healthStat.TakeDamage(damage);
+            Vanish();
+            // TODO: Spawn an explosion prefab?
+        }
+
+    }
 
 
 }
