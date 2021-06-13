@@ -38,6 +38,7 @@ public class AmmoStat : MonoBehaviour
         bulletsLeft += numBullets;
         if(bulletsLeft > maxCapacity)
             bulletsLeft = maxCapacity;
+        OnChangeBullets?.Invoke(new AmmoInfo(maxCapacity, bulletsLeft));
     }
 }
 

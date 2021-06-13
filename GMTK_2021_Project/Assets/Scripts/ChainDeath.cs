@@ -22,7 +22,6 @@ public class ChainDeath : MonoBehaviour
     {
         foreach(HealthStat health in deathChain)
         {
-            Debug.Log("ALSDKF");
             yield return new WaitForSeconds(0.5f);
             health.TakeDamage(99999);       // Instakill every item in chain
         }
