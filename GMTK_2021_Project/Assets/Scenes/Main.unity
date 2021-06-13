@@ -1547,7 +1547,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 652490516}
   shotsPerSecond: 10
-  poolType: 2
+  poolType: 1
+  burst: 0
+  burstOnTime: 0.5
+  burstOffTime: 0.5
   optionalAmmoSource: {fileID: 16806550}
 --- !u!58 &1631314649
 CircleCollider2D:

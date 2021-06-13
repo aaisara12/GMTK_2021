@@ -11,6 +11,10 @@ public class ProjectileLauncher : MonoBehaviour
     ProjectilePool pool;
 
 
+    [SerializeField] bool burst = false;
+    [SerializeField] float burstOnTime = 0.5f;
+    [SerializeField] float burstOffTime = 0.5f;
+
     public enum PoolType
     {
         basic,
@@ -51,6 +55,9 @@ public class ProjectileLauncher : MonoBehaviour
         }
         if(firePoint == null)
             Debug.LogWarning("No fire point specified");
+
+        if(burst)
+            StartCoroutine(BurstToggle());
     }
 
     // Update is called once per frame
@@ -117,6 +124,18 @@ public class ProjectileLauncher : MonoBehaviour
     public void SetLockState(bool lockState)
     {
         isLocked = lockState;
+    }
+
+
+    IEnumerator BurstToggle()
+    {
+        while(true)
+        {
+            SetLockState(true);
+            yield return new WaitForSeconds(burstOffTime);
+            SetLockState(false);
+            yield return new WaitForSeconds(burstOnTime);
+        }
     }
 
 }

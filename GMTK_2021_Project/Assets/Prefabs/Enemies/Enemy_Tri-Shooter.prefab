@@ -212,6 +212,9 @@ MonoBehaviour:
   firePoint: {fileID: 8643607240563317740}
   shotsPerSecond: 5
   poolType: 2
+  burst: 1
+  burstOnTime: 2
+  burstOffTime: 3
   optionalAmmoSource: {fileID: 0}
 --- !u!114 &8643607239404189319
 MonoBehaviour:
@@ -228,6 +231,9 @@ MonoBehaviour:
   firePoint: {fileID: 8643607239770520925}
   shotsPerSecond: 5
   poolType: 1
+  burst: 1
+  burstOnTime: 2
+  burstOffTime: 3
   optionalAmmoSource: {fileID: 0}
 --- !u!114 &8643607239404189336
 MonoBehaviour:
@@ -244,6 +250,9 @@ MonoBehaviour:
   firePoint: {fileID: 8643607241249937918}
   shotsPerSecond: 5
   poolType: 2
+  burst: 1
+  burstOnTime: 2
+  burstOffTime: 3
   optionalAmmoSource: {fileID: 0}
 --- !u!1 &8643607239770520926
 GameObject:
