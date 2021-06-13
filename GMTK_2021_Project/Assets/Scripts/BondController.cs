@@ -64,7 +64,8 @@ public class BondController : MonoBehaviour
 
     void HandleDeath()
     {
-        edgeCollider.enabled = false;
+        if(edgeCollider != null)
+            edgeCollider.enabled = false;
 
         // Do some other stuff (like play proper animation or change color, etc.)
         healthStat.OnUnitKilled -= HandleDeath;

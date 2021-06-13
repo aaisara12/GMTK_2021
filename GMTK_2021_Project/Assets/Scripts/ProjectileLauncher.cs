@@ -73,5 +73,9 @@ public class ProjectileLauncher : MonoBehaviour
 
     public float GetShotsPerSecond() => shotsPerSecond;     // This is used by the laser sound effect manager to determine how fast to play the loop
 
+    void OnDisable()
+    {
+        _isShooting = false;    // Don't want player to "keep shooting" after death
+    }
 
 }
