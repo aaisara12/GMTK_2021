@@ -7,9 +7,8 @@ public class WaveSpawner : MonoBehaviour
 
     [Header ("Enemies")]
     public GameObject square;
-
     public GameObject triangle;
-
+    public GameManager game;
     [Header ("Spawning Details")]
     public bool paused;
     public float rate;
@@ -22,7 +21,7 @@ public class WaveSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        game = FindObjectOfType<GameManager>();
         Random.InitState(7019542);
         spawnWave();
     }
@@ -62,8 +61,13 @@ public class WaveSpawner : MonoBehaviour
             if(number==0)
                 angle = Quaternion.Euler(0,0,90);
 
-            Instantiate(enemy,spawnPosition,angle,this.gameObject.transform);
+            HealthStat stat = Instantiate(enemy,spawnPosition,angle,this.gameObject.transform).GetComponent<HealthStat>();
+            stat.OnUnitKilled += addPoints;
         }
+    }
+
+    void addPoints(){
+        game.addPoints();
     }
 
 

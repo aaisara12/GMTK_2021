@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
-
+        score=0;
         targetHealth1.OnUnitKilled += GameOver;
         targetHealth2.OnUnitKilled += GameOver;
     }
