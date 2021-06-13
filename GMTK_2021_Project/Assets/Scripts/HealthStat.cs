@@ -27,8 +27,11 @@ public class HealthStat : MonoBehaviour
         OnUnitDamaged?.Invoke(new HealthInfo(maxHealth, currentHealth));
 
         if(currentHealth <= 0)
+        {
             OnUnitKilled?.Invoke();     // If the unit has died, then give broadcast
-
+            gameObject.SetActive(false);
+        }
+            
     }
 }
 
