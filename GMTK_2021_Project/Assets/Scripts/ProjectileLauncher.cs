@@ -14,6 +14,9 @@ public class ProjectileLauncher : MonoBehaviour
     private bool _isShooting = false;
     public bool isShooting => _isShooting;
 
+
+    bool isLocked = false;
+
     float lastShot = 0;
 
     void Awake()
@@ -28,6 +31,12 @@ public class ProjectileLauncher : MonoBehaviour
     void Update()
     {
         if(firePoint == null || pool == null) {return;}
+
+        if(isLocked)
+        {
+            _isShooting = false;
+            return;
+        }
 
         if(Time.time - lastShot > 1/shotsPerSecond)
         {
@@ -73,5 +82,15 @@ public class ProjectileLauncher : MonoBehaviour
 
     public float GetShotsPerSecond() => shotsPerSecond;     // This is used by the laser sound effect manager to determine how fast to play the loop
 
+    void OnDisable()
+    {
+        _isShooting = false;    // Don't want player to "keep shooting" after death
+    }
+
+
+    public void SetLockState(bool lockState)
+    {
+        isLocked = lockState;
+    }
 
 }

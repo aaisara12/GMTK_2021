@@ -83,7 +83,7 @@ public class Projectile : MonoBehaviour, IPooledGameObject
 
             healthStat.TakeDamage(damage);
             Vanish();
-            // TODO: Spawn an explosion prefab?
+
         }
 
     }
