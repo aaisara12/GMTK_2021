@@ -14,6 +14,12 @@ public class AmmoStat : MonoBehaviour
         if(bulletsLeft > maxCapacity)       // Prevents accidentally putting more bullets than capacity (through editor)
             bulletsLeft = maxCapacity;
     }
+
+    void Start()
+    {
+        // We put this in start because other scripts subscribe to the event in Awake()
+        OnChangeBullets?.Invoke(new AmmoInfo(maxCapacity, bulletsLeft));
+    }
     // Try to expend a certain number of bullets from storage
     public bool TryUseBullets(int numBullets)
     {

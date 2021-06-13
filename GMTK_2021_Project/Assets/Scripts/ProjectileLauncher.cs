@@ -11,6 +11,9 @@ public class ProjectileLauncher : MonoBehaviour
     [SerializeField] ProjectilePool pool;
     [SerializeField] AmmoStat optionalAmmoSource;       // This is optional so that we can have a unit have infinite ammo
 
+    private bool _isShooting = false;
+    public bool isShooting => _isShooting;
+
     float lastShot = 0;
 
     void Awake()
@@ -33,8 +36,12 @@ public class ProjectileLauncher : MonoBehaviour
             if(optionalAmmoSource != null)                  // If we do have an ammo source, then expend bullets
             {
                 if(!optionalAmmoSource.TryUseBullets(1))    // If we are all out of bullets to use, then don't shoot any more
+                {
+                    _isShooting = false;
                     return;
+                }
             }
+            _isShooting = true;
 
             var newProj = pool.Get();       // This is where we try to get another projectile from the queue (note that the projectiles will automatically enqueue themselves back in after expiring)
 
@@ -62,6 +69,9 @@ public class ProjectileLauncher : MonoBehaviour
             
         }
     }
+
+
+    public float GetShotsPerSecond() => shotsPerSecond;     // This is used by the laser sound effect manager to determine how fast to play the loop
 
 
 }
