@@ -6,6 +6,8 @@ public class AmmoStat : MonoBehaviour
 {
     [SerializeField] int maxCapacity = 100;
     [SerializeField] int bulletsLeft = 0;
+
+    public event System.Action<AmmoInfo> OnChangeBullets;
     
     void Awake()
     {
@@ -20,6 +22,7 @@ public class AmmoStat : MonoBehaviour
         else
         {
             bulletsLeft -= numBullets;
+            OnChangeBullets?.Invoke(new AmmoInfo(maxCapacity, bulletsLeft));
             return true;
         }
     }
@@ -29,5 +32,17 @@ public class AmmoStat : MonoBehaviour
         bulletsLeft += numBullets;
         if(bulletsLeft > maxCapacity)
             bulletsLeft = maxCapacity;
+    }
+}
+
+// NOTE: There's an equivalent struct for health info (probably could be grouped together under same class)
+public struct AmmoInfo
+{
+    public int maxBullets;
+    public int currentBullets;
+    public AmmoInfo(int mBullets, int cBullets)
+    {
+        maxBullets = mBullets;
+        currentBullets = cBullets;
     }
 }
