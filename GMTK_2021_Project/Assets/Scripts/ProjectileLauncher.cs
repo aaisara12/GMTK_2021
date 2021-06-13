@@ -7,8 +7,17 @@ public class ProjectileLauncher : MonoBehaviour
     [SerializeField] Transform firePoint;
     [SerializeField] float shotsPerSecond = 1;
 
+    [SerializeField] PoolType poolType = PoolType.basic;
+    ProjectilePool pool;
 
-    [SerializeField] ProjectilePool pool;
+
+    public enum PoolType
+    {
+        basic,
+        fast,
+        cool
+    }
+
     [SerializeField] AmmoStat optionalAmmoSource;       // This is optional so that we can have a unit have infinite ammo
 
     private bool _isShooting = false;
@@ -22,7 +31,20 @@ public class ProjectileLauncher : MonoBehaviour
     void Awake()
     {
         if(pool == null)
-            Debug.LogWarning("Launcher does not have a projectile pool to use!");
+        {
+            switch(poolType)
+            {
+                case PoolType.basic:
+                    pool = GameObject.Find("Basic Bullet Pool").GetComponent<ProjectilePool>();
+                    break;
+                case PoolType.fast:
+                    pool = GameObject.Find("Fast Bullet Pool").GetComponent<ProjectilePool>();
+                    break;
+                case PoolType.cool:
+                    pool = GameObject.Find("Cool Bullet Pool").GetComponent<ProjectilePool>();
+                    break;
+            }
+        }
         if(firePoint == null)
             Debug.LogWarning("No fire point specified");
     }
