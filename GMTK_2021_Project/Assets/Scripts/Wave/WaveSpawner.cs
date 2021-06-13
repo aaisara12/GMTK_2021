@@ -7,7 +7,7 @@ public class WaveSpawner : MonoBehaviour
 
     [Header ("Enemies")]
     public GameObject square;
-    public GameObject circle;
+
     public GameObject triangle;
 
     [Header ("Spawning Details")]
@@ -24,37 +24,47 @@ public class WaveSpawner : MonoBehaviour
     {
 
         Random.InitState(7019542);
+        spawnWave();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T))
+        spawnTimer+=Time.deltaTime;
+        if(spawnTimer >= rate){
             spawnWave();
+            spawnTimer=0;
+        }
     }
 
     void spawnWave(){
         //pick 1-4 locations 
         int numEnemies = Random.Range(0,5)+1;
         Debug.Log(numEnemies);
-        float stagger = Mathf.Abs(maxHeight-minHeight)/numEnemies;
+        float stagger = Mathf.Abs(maxHeight-minHeight)/(numEnemies+1);
+
 
         for (int x=1;x<=numEnemies;x++){
             Vector3 spawnPosition = new Vector3(transform.position.x,transform.position.y+maxHeight-stagger*x,transform.position.z);
-            Instantiate(randomEnemy(),spawnPosition,Quaternion.identity,this.gameObject.transform);
+            Quaternion angle = Quaternion.identity;
+            //generate random enemy
+            int number = Random.Range(0,2);
+            GameObject enemy = null;
+            switch(number){
+                case 0:
+                    enemy= triangle;
+                    break;
+                case 1:
+                    enemy= square;
+                    break;
+            }
+
+            if(number==0)
+                angle = Quaternion.Euler(0,0,90);
+
+            Instantiate(enemy,spawnPosition,angle,this.gameObject.transform);
         }
     }
 
-    GameObject randomEnemy(){
-        int number = Random.Range(0,3);
-        switch(number){
-            case 0:
-                return triangle;
-            case 1:
-                return square;
-            case 2:
-                return circle;
-        }
-        return null;
-    }
+
 }

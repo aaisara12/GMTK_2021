@@ -8,10 +8,12 @@ public class HealthStat : MonoBehaviour
     [SerializeField] float currentHealth = 100;
 
     public event System.Action OnUnitKilled;
+
     public event System.Action<HealthInfo> OnUnitDamaged;   // Broadcast the current health state of the unit
 
     void Awake()
     {
+
         if(currentHealth > maxHealth)       // If current health should not be greater than max health
             currentHealth = maxHealth;
         if(currentHealth <= 0)
@@ -29,6 +31,7 @@ public class HealthStat : MonoBehaviour
         if(currentHealth <= 0)
         {
             OnUnitKilled?.Invoke();     // If the unit has died, then give broadcast
+
             gameObject.SetActive(false);
         }
             
