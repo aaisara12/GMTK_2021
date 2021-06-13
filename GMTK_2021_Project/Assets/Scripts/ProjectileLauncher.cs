@@ -15,7 +15,8 @@ public class ProjectileLauncher : MonoBehaviour
     {
         basic,
         fast,
-        cool
+        cool,
+        chonk
     }
 
     [SerializeField] AmmoStat optionalAmmoSource;       // This is optional so that we can have a unit have infinite ammo
@@ -42,6 +43,9 @@ public class ProjectileLauncher : MonoBehaviour
                     break;
                 case PoolType.cool:
                     pool = GameObject.Find("Cool Bullet Pool").GetComponent<ProjectilePool>();
+                    break;
+                case PoolType.chonk:
+                    pool = GameObject.Find("Chonk Bullet Pool").GetComponent<ProjectilePool>();
                     break;
             }
         }
