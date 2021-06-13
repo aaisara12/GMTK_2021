@@ -1224,7 +1224,7 @@ GameObject:
   - component: {fileID: 636496403}
   - component: {fileID: 636496402}
   m_Layer: 5
-  m_Name: Boss Health
+  m_Name: Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1380,7 +1380,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1215922847
 GameObject:
@@ -1502,7 +1502,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1230313405
 GameObject:
@@ -1740,6 +1740,14 @@ MonoBehaviour:
     randomPitch: 0
     spatialBlend: 0
     source: {fileID: 0}
+  - name: player_death
+    clip: {fileID: 8300000, guid: 553ee3328ac514640bff6057bfe23c23, type: 3}
+    volume: 0.3
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    spatialBlend: 0
+    source: {fileID: 0}
 --- !u!4 &1480455081
 Transform:
   m_ObjectHideFlags: 0
@@ -1753,7 +1761,7 @@ Transform:
   m_Children:
   - {fileID: 186956056}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1631314643
 GameObject:
@@ -2098,6 +2106,7 @@ GameObject:
   - component: {fileID: 1816369110}
   - component: {fileID: 1816369109}
   - component: {fileID: 1816369113}
+  - component: {fileID: 1816369114}
   m_Layer: 0
   m_Name: Bond
   m_TagString: Player
@@ -2272,6 +2281,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 100
+--- !u!114 &1816369114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816369108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e6ca1f400d821b46885dfd20764312c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathParticles: {fileID: 8869604418546963975, guid: 17c7734aa9b914448abff676796083d7,
+    type: 3}
+  deathSoundName: player_death
 --- !u!1 &1924093220
 GameObject:
   m_ObjectHideFlags: 0
@@ -2443,7 +2467,7 @@ Transform:
   m_Children:
   - {fileID: 1230313406}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1984525932
 GameObject:
