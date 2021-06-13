@@ -5,7 +5,7 @@ using UnityEngine;
 public class ClickInput : MonoBehaviour, IUnitInput
 {
     [SerializeField] float targetReachedThreshold = 0.1f;
-
+    [SerializeField] LocationIndicatorController locationIndicatorController;
     Vector2 targetPoint = Vector2.zero;     // This is the coordinate that we wish to move to
     public Vector2 inputVector {get; private set;}
 
@@ -27,6 +27,8 @@ public class ClickInput : MonoBehaviour, IUnitInput
             if(Physics.Raycast(lastClick, out hit))
             {
                 targetPoint = (Vector2) hit.point;
+                if(locationIndicatorController != null)
+                    locationIndicatorController.SetNewLocation(targetPoint);
             }
         }
 
