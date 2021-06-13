@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    // TODO Have AudioManager subscribe to OnDeath events (OnHit events might be too much)
+    // TODO Insert main theme?
     public static AudioManager instance;
 
     [SerializeField]

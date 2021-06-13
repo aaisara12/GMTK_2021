@@ -31,5 +31,8 @@ public class LaserSoundController : MonoBehaviour
             laserSound.Stop();
             isPlayingSound = false;
         }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+            AudioManager.instance.PlaySound("enemy_death_medium");
     }
 }
