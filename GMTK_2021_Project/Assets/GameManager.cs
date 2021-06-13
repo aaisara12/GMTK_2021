@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [Header ("Score")]
     public int score;
     public TextMeshProUGUI text;
+    public TextMeshProUGUI in_game_text;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     public void addPoints(){
         score+=100;
         text.text ="Score: "+score;
+        in_game_text.text = "Score: "+score;
     }
 
 }
