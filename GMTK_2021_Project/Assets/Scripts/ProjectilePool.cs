@@ -39,7 +39,7 @@ public class ProjectilePool : MonoBehaviour
 
     void AddObject()
     {
-        var newObject = GameObject.Instantiate(projectilePrefab);
+        var newObject = GameObject.Instantiate(projectilePrefab,Vector3.zero,Quaternion.identity,this.transform);
         newObject.SetActive(false);
         pool.Enqueue(newObject);
 
